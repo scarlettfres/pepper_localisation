@@ -1,12 +1,10 @@
 <launch>
   <!-- Use CPP node by default for nao_sensors -->
-  <arg name="force_python" default="true" />
-  <include file="$(find pepper_description)/launch/pepper_publisher.launch" />
 
   <!-- nao driver works for pepper -->
   <include file="$(find tools_tf)/launch/naoqi_driver.launch">
 
-    <arg name="force_python" value="$(arg force_python)" />
+    <arg name="force_python" value="true" />
   </include>
 
   <include file="$(find pepper_sensors)/launch/sonar.launch" />

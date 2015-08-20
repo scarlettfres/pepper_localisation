@@ -1,13 +1,20 @@
 <launch>
   <!-- Use CPP node by default for nao_sensors -->
-  <arg name="force_python" default="true" />
-  <include file="$(find pepper_description)/launch/pepper_publisher.launch" />
+
+
+  <arg name="version" default="1.0" />
+  <param name="robot_description" command="$(find xacro)/xacro.py $(find pepper_description)/urdf/pepper$(arg version)_generated_urdf/pepper_robot.xacro" />
+  <node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher" >
+  <remap from="/tf" to="/tf_relay"/>
+  </node>
+
+
 
   <!-- nao driver works for pepper -->
-  <include file="$(find tools_tf)/launch/naoqi_driver.launch">
+  <!-- <include file="$(find tools_tf)/launch/naoqi_driver.launch">
+ -->
+    <arg name="force_python" value="true" />
 
-    <arg name="force_python" value="$(arg force_python)" />
-  </include>
 
   <include file="$(find pepper_sensors)/launch/sonar.launch" />
   <include file="$(find pepper_sensors)/launch/laser.launch" />
